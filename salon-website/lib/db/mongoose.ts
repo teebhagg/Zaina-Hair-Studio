@@ -80,7 +80,7 @@ async function connectDB() {
     }
 
     cached.promise = mongoose.connect(uri, opts).then((mongoose) => {
-      console.log(`Connected to MongoDB database: ${mongoose.connection.db.databaseName}`);
+      console.log(`Connected to MongoDB database: ${mongoose.connection.db?.databaseName || 'unknown'}`);
       return mongoose
     })
   }
