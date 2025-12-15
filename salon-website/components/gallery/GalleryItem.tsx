@@ -2,7 +2,6 @@
 
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-
 interface GalleryItemProps {
   _id: string
   image: string
@@ -12,6 +11,7 @@ interface GalleryItemProps {
 }
 
 export function GalleryItem({ _id, image, caption, category, index = 0 }: GalleryItemProps) {
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 60, scale: 0.9 }}
@@ -24,18 +24,18 @@ export function GalleryItem({ _id, image, caption, category, index = 0 }: Galler
       }}
       className="group relative overflow-visible cursor-pointer shadow-lg hover:shadow-2xl transition-shadow duration-300 mb-4 break-inside-avoid"
     >
-      <div className="relative w-full rounded-2xl overflow-hidden">
+      <div className="relative w-full overflow-hidden">
         <Image
           src={image}
           alt={caption || 'Gallery image'}
           width={400}
           height={600}
-          className="object-cover w-full h-auto rounded-2xl transition-opacity duration-300 group-hover:opacity-95"
+          className="object-cover w-full h-auto transition-opacity duration-300 group-hover:opacity-95"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
         />
         {/* Animated stroke border */}
         <motion.div
-          className="absolute inset-0 rounded-2xl pointer-events-none"
+          className="absolute inset-0 pointer-events-none"
           initial={{ opacity: 0 }}
           whileHover={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
@@ -50,7 +50,7 @@ export function GalleryItem({ _id, image, caption, category, index = 0 }: Galler
               y="2"
               width="calc(100% - 4px)"
               height="calc(100% - 4px)"
-              rx="16"
+              rx="0"
               fill="none"
               stroke="hsl(var(--primary))"
               strokeWidth="3"
@@ -72,7 +72,7 @@ export function GalleryItem({ _id, image, caption, category, index = 0 }: Galler
           initial={{ opacity: 0 }}
           whileHover={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
-          className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent pointer-events-none rounded-2xl"
+          className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent pointer-events-none"
         >
           <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
             {category && (

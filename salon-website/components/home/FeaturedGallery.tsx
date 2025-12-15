@@ -4,12 +4,18 @@ import { GalleryItem } from '@/components/gallery/GalleryItem'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
+import { usePathname } from 'next/navigation'
 
 interface FeaturedGalleryProps {
   gallery: any[]
 }
 
 export function FeaturedGallery({ gallery }: FeaturedGalleryProps) {
+  const { t } = useTranslation()
+  const pathname = usePathname()
+  const locale = pathname.split('/')[1] || 'en'
+  
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -30,9 +36,9 @@ export function FeaturedGallery({ gallery }: FeaturedGalleryProps) {
         transition={{ duration: 0.6 }}
         className="text-center mb-12"
       >
-        <h2 className="text-4xl font-bold mb-4">Our Work</h2>
+        <h2 className="text-4xl font-bold mb-4">{t('home.gallery.title')}</h2>
         <p className="text-muted-foreground text-lg">
-          See the beautiful transformations we create
+          {t('home.gallery.subtitle')}
         </p>
       </motion.div>
       {gallery.length === 0 ? (
@@ -42,7 +48,7 @@ export function FeaturedGallery({ gallery }: FeaturedGalleryProps) {
           className="text-center py-12"
         >
           <p className="text-muted-foreground">
-            No featured gallery items yet. Mark gallery items as "Featured" in the CMS to display them here.
+            {t('home.noFeaturedGallery')}
           </p>
         </motion.div>
       ) : (
@@ -66,7 +72,7 @@ export function FeaturedGallery({ gallery }: FeaturedGalleryProps) {
             className="text-center mt-12"
           >
             <Button asChild variant="outline" size="lg">
-              <Link href="/gallery">View Full Gallery</Link>
+              <Link href={`/${locale}/gallery`}>{t('home.gallery.viewAll')}</Link>
             </Button>
           </motion.div>
         </>

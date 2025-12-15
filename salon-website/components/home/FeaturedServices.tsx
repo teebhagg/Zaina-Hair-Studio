@@ -4,12 +4,18 @@ import { ServiceCard } from '@/components/services/ServiceCard'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
+import { usePathname } from 'next/navigation'
 
 interface FeaturedServicesProps {
   services: any[]
 }
 
 export function FeaturedServices({ services }: FeaturedServicesProps) {
+  const { t } = useTranslation()
+  const pathname = usePathname()
+  const locale = pathname.split('/')[1] || 'en'
+  
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -30,9 +36,9 @@ export function FeaturedServices({ services }: FeaturedServicesProps) {
         transition={{ duration: 0.6 }}
         className="text-center mb-12"
       >
-        <h2 className="text-4xl font-bold mb-4">Our Services</h2>
+        <h2 className="text-4xl font-bold mb-4">{t('home.services.title')}</h2>
         <p className="text-muted-foreground text-lg">
-          Discover our range of premium beauty services
+          {t('home.services.subtitle')}
         </p>
       </motion.div>
       {services.length === 0 ? (
@@ -42,7 +48,7 @@ export function FeaturedServices({ services }: FeaturedServicesProps) {
           className="text-center py-12"
         >
           <p className="text-muted-foreground">
-            No featured services yet. Mark services as "Featured" in the CMS to display them here.
+            {t('home.noFeaturedServices')}
           </p>
         </motion.div>
       ) : (
@@ -75,7 +81,7 @@ export function FeaturedServices({ services }: FeaturedServicesProps) {
             className="text-center mt-12"
           >
             <Button asChild variant="outline" size="lg">
-              <Link href="/services">View All Services</Link>
+              <Link href={`/${locale}/services`}>{t('home.services.viewAll')}</Link>
             </Button>
           </motion.div>
         </>

@@ -1,21 +1,28 @@
-'use client'
+"use client";
 
-import Image from 'next/image'
-import Link from 'next/link'
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Clock, DollarSign } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
+import { motion } from "framer-motion";
+import { Clock, DollarSign } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 interface ServiceCardProps {
-  _id: string
-  name: string
-  slug: { current: string }
-  price: number
-  duration: number
-  description: string
-  image: string
-  featured?: boolean
+  _id: string;
+  name: string;
+  slug: { current: string };
+  price: number;
+  duration: number;
+  description: string;
+  image: string;
+  featured?: boolean;
 }
 
 export function ServiceCard({
@@ -28,13 +35,16 @@ export function ServiceCard({
   image,
   featured,
 }: ServiceCardProps) {
+  const { t } = useTranslation();
+  const pathname = usePathname();
+  const locale = pathname.split("/")[1] || "en";
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
-    >
+      transition={{ duration: 0.5 }}>
       <Card className="overflow-hidden hover:shadow-xl transition-shadow">
         <div className="relative h-48 w-full">
           <Image
@@ -45,8 +55,8 @@ export function ServiceCard({
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
           {featured && (
-            <div className="absolute top-2 right-2 bg-primary text-primary-foreground px-2 py-1 rounded-md text-xs font-semibold">
-              Featured
+            <div className="absolute top-2 right-2 bg-primary text-primary-foreground px-2 py-1 text-xs font-semibold">
+              {t("services.featured")}
             </div>
           )}
         </div>
@@ -63,19 +73,24 @@ export function ServiceCard({
           </div>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Clock className="h-4 w-4" />
-            <span>{duration} min</span>
+            <span>
+              {duration} {t("services.minutes")}
+            </span>
           </div>
         </CardContent>
         <CardFooter className="flex gap-2">
           <Button asChild variant="outline" className="flex-1">
-            <Link href={`/services/${slug.current}`}>View Details</Link>
+            <Link href={`/${locale}/services/${slug.current}`}>
+              {t("services.viewDetails")}
+            </Link>
           </Button>
           <Button asChild className="flex-1">
-            <Link href={`/book?service=${slug.current}`}>Book Now</Link>
+            <Link href={`/${locale}/book?service=${slug.current}`}>
+              {t("services.bookNow")}
+            </Link>
           </Button>
         </CardFooter>
       </Card>
     </motion.div>
-  )
+  );
 }
-

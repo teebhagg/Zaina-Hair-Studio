@@ -11,32 +11,32 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Star } from 'lucide-react'
 import { useToast } from '@/components/ui/use-toast'
-import { submitReview } from '@/app/actions/reviews'
+import { submitReview } from '@/app/[lang]/actions/reviews'
+import { useTranslation } from 'react-i18next'
 
 export function ReviewForm() {
+  const { t } = useTranslation()
   const [rating, setRating] = useState(0)
   const [hoveredRating, setHoveredRating] = useState(0)
   const { toast } = useToast()
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
     reset,
   } = useForm<ReviewFormData>({
     resolver: zodResolver(reviewSchema),
     defaultValues: {
       rating: 0,
-      text: '',
-      author: '',
-      email: '',
     },
   })
 
   const onSubmit = async (data: ReviewFormData) => {
     if (rating === 0) {
       toast({
-        title: 'Rating Required',
-        description: 'Please select a rating',
+        title: t('reviews.ratingRequired'),
+        description: t('reviews.pleaseSelectRating'),
         variant: 'destructive',
       })
       return
@@ -46,22 +46,24 @@ export function ReviewForm() {
       const result = await submitReview({ ...data, rating })
       if (result.success) {
         toast({
-          title: 'Thank you!',
-          description: 'Your review has been submitted successfully.',
+          title: t('reviews.thankYou'),
+          description: t('reviews.reviewSubmitted'),
         })
         reset()
         setRating(0)
+        // Dispatch custom event to refresh reviews list
+        window.dispatchEvent(new Event('reviewSubmitted'))
       } else {
         toast({
-          title: 'Error',
-          description: result.error || 'Failed to submit review',
+          title: t('reviews.error'),
+          description: result.error || t('reviews.failedToSubmit'),
           variant: 'destructive',
         })
       }
     } catch (error) {
       toast({
-        title: 'Error',
-        description: 'Something went wrong. Please try again.',
+        title: t('reviews.error'),
+        description: t('reviews.somethingWentWrong'),
         variant: 'destructive',
       })
     }
@@ -70,41 +72,12 @@ export function ReviewForm() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Write a Review</CardTitle>
+        <CardTitle>{t('reviews.submit')}</CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <Label>Rating</Label>
-            <div className="flex gap-2 mt-2">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  onClick={() => setRating(i + 1)}
-                  onMouseEnter={() => setHoveredRating(i + 1)}
-                  onMouseLeave={() => setHoveredRating(0)}
-                  className="focus:outline-none"
-                >
-                  <Star
-                    className={`h-6 w-6 transition-colors ${
-                      i < (hoveredRating || rating)
-                        ? 'fill-primary text-primary'
-                        : 'fill-none text-muted-foreground'
-                    }`}
-                  />
-                </button>
-              ))}
-            </div>
-            {errors.rating && (
-              <p className="text-sm text-destructive mt-1">
-                {errors.rating.message}
-              </p>
-            )}
-          </div>
-
-          <div>
-            <Label htmlFor="author">Your Name</Label>
+            <Label htmlFor="author">{t('reviews.name')}</Label>
             <Input
               id="author"
               {...register('author')}
@@ -118,7 +91,7 @@ export function ReviewForm() {
           </div>
 
           <div>
-            <Label htmlFor="email">Email (Optional)</Label>
+            <Label htmlFor="email">{t('reviews.email')}</Label>
             <Input
               id="email"
               type="email"
@@ -133,12 +106,44 @@ export function ReviewForm() {
           </div>
 
           <div>
-            <Label htmlFor="text">Your Review</Label>
+            <Label>{t('reviews.rating')}</Label>
+            <div className="flex gap-1">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <button
+                  key={star}
+                  type="button"
+                  onClick={() => {
+                    setRating(star)
+                    setValue('rating', star)
+                  }}
+                  onMouseEnter={() => setHoveredRating(star)}
+                  onMouseLeave={() => setHoveredRating(0)}
+                  className="focus:outline-none"
+                >
+                  <Star
+                    className={`h-6 w-6 transition-colors ${
+                      star <= (hoveredRating || rating)
+                        ? 'fill-primary text-primary'
+                        : 'text-muted-foreground'
+                    }`}
+                  />
+                </button>
+              ))}
+            </div>
+            {errors.rating && (
+              <p className="text-sm text-destructive mt-1">
+                {errors.rating.message}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <Label htmlFor="text">{t('reviews.comment')} *</Label>
             <Textarea
               id="text"
               {...register('text')}
-              placeholder="Share your experience..."
-              rows={5}
+              placeholder={t('reviews.shareExperience')}
+              rows={4}
             />
             {errors.text && (
               <p className="text-sm text-destructive mt-1">
@@ -148,11 +153,10 @@ export function ReviewForm() {
           </div>
 
           <Button type="submit" disabled={isSubmitting} className="w-full">
-            {isSubmitting ? 'Submitting...' : 'Submit Review'}
+            {isSubmitting ? t('reviews.submitting') : t('reviews.submitButton')}
           </Button>
         </form>
       </CardContent>
     </Card>
   )
 }
-

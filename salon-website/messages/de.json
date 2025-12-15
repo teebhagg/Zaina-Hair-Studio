@@ -1,0 +1,127 @@
+{
+  "nav": {
+    "home": "Startseite",
+    "services": "Dienstleistungen",
+    "gallery": "Galerie",
+    "reviews": "Bewertungen",
+    "about": "Über uns",
+    "contact": "Kontakt",
+    "book": "Termin buchen",
+    "quickLinks": "Schnelllinks",
+    "bookCTA": "Ihren Termin buchen",
+    "bookCTADescription": "Bereit für Luxus? Buchen Sie noch heute Ihren Termin!",
+    "footerDescription": "Ihr Ziel für Premium-Beauty- und Wellness-Dienstleistungen.",
+    "allRightsReserved": "Alle Rechte vorbehalten."
+  },
+  "home": {
+    "hero": {
+      "title": "ZAINAS FRISEURSALON",
+      "subtitle": "CELEBRITY FRISEURIN"
+    },
+    "services": {
+      "title": "Unsere Dienstleistungen",
+      "subtitle": "Entdecken Sie unser Angebot an Premium-Beauty-Dienstleistungen",
+      "viewAll": "Alle Dienstleistungen anzeigen"
+    },
+    "gallery": {
+      "title": "Unsere Arbeiten",
+      "subtitle": "Sehen Sie die wunderschönen Transformationen, die wir schaffen",
+      "viewAll": "Vollständige Galerie anzeigen"
+    },
+    "promotions": {
+      "title": "Sonderangebote",
+      "subtitle": "Verpassen Sie nicht unsere exklusiven Aktionen",
+      "showMore": "Mehr anzeigen",
+      "aboutOffer": "Über dieses Angebot",
+      "whatsIncluded": "Was ist enthalten",
+      "termsConditions": "Geschäftsbedingungen",
+      "readyToBook": "Bereit zu buchen?",
+      "dontMissOut": "Verpassen Sie nicht dieses exklusive Angebot!",
+      "offerValidUntil": "Angebot gültig bis",
+      "backToHome": "Zurück zur Startseite",
+      "starts": "Beginnt",
+      "ends": "Endet"
+    },
+    "noFeaturedServices": "Noch keine empfohlenen Dienstleistungen. Markieren Sie Dienstleistungen in der CMS als \"Empfohlen\", um sie hier anzuzeigen.",
+    "noFeaturedGallery": "Noch keine empfohlenen Galerieelemente. Markieren Sie Galerieelemente in der CMS als \"Empfohlen\", um sie hier anzuzeigen."
+  },
+  "services": {
+    "title": "Unsere Dienstleistungen",
+    "subtitle": "Entdecken Sie unser umfassendes Angebot an Beauty- und Wellness-Dienstleistungen",
+    "featured": "Empfohlen",
+    "viewDetails": "Details anzeigen",
+    "bookNow": "Jetzt buchen",
+    "price": "Preis",
+    "duration": "Dauer",
+    "minutes": "Minuten",
+    "bookService": "Diesen Service buchen"
+  },
+  "gallery": {
+    "title": "Galerie",
+    "subtitle": "Erkunden Sie unsere wunderschönen Arbeiten und Transformationen",
+    "noItems": "Noch keine Galerieelemente. Schauen Sie später wieder vorbei!"
+  },
+  "reviews": {
+    "title": "Kundenbewertungen",
+    "subtitle": "Sehen Sie, was unsere Kunden über uns sagen",
+    "submit": "Bewertung abgeben",
+    "name": "Name",
+    "email": "E-Mail",
+    "rating": "Bewertung",
+    "comment": "Kommentar",
+    "submitButton": "Bewertung absenden",
+    "noReviews": "Noch keine Bewertungen. Seien Sie der Erste, der bewertet!",
+    "basedOn": "Basierend auf {count} Bewertungen",
+    "ratingRequired": "Bewertung erforderlich",
+    "pleaseSelectRating": "Bitte wählen Sie eine Bewertung",
+    "thankYou": "Vielen Dank!",
+    "reviewSubmitted": "Ihre Bewertung wurde erfolgreich übermittelt.",
+    "error": "Fehler",
+    "failedToSubmit": "Bewertung konnte nicht übermittelt werden",
+    "somethingWentWrong": "Etwas ist schief gelaufen. Bitte versuchen Sie es erneut.",
+    "optional": "Optional",
+    "shareExperience": "Teilen Sie Ihre Erfahrung...",
+    "submitting": "Wird übermittelt..."
+  },
+  "about": {
+    "title": "Über uns",
+    "values": "Unsere Werte",
+    "team": "Unser Team",
+    "specialties": "Spezialitäten"
+  },
+  "contact": {
+    "title": "Kontaktieren Sie uns",
+    "subtitle": "Nehmen Sie Kontakt mit uns auf",
+    "address": "Adresse",
+    "phone": "Telefon",
+    "email": "E-Mail",
+    "hours": "Öffnungszeiten"
+  },
+  "book": {
+    "title": "Termin buchen",
+    "subtitle": "Füllen Sie das untenstehende Formular aus, um Ihren Besuch zu planen",
+    "name": "Vollständiger Name",
+    "email": "E-Mail-Adresse",
+    "phone": "Telefonnummer",
+    "service": "Service",
+    "date": "Bevorzugtes Datum",
+    "time": "Bevorzugte Uhrzeit",
+    "notes": "Zusätzliche Notizen",
+    "submit": "Termin buchen",
+    "success": "Termin erfolgreich gebucht!",
+    "error": "Terminbuchung fehlgeschlagen. Bitte versuchen Sie es erneut.",
+    "successDescription": "Wir senden Ihnen in Kürze eine Bestätigungs-E-Mail.",
+    "errorDescription": "Terminbuchung fehlgeschlagen. Bitte versuchen Sie es erneut.",
+    "selectService": "Service auswählen",
+    "notesPlaceholder": "Besondere Wünsche oder Notizen...",
+    "booking": "Wird gebucht...",
+    "optional": "Optional"
+  },
+  "common": {
+    "loading": "Lädt...",
+    "error": "Ein Fehler ist aufgetreten",
+    "back": "Zurück",
+    "next": "Weiter",
+    "previous": "Vorherige"
+  }
+}

@@ -10,9 +10,8 @@ export default function NotFound() {
         The page you&apos;re looking for doesn&apos;t exist.
       </p>
       <Button asChild>
-        <Link href="/">Go Home</Link>
+        <Link href="/en">Go Home</Link>
       </Button>
     </div>
   )
 }
-

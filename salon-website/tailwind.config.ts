@@ -20,11 +20,11 @@ const config: Config = {
         background: 'hsl(0 0% 5%)',
         foreground: 'hsl(0 0% 98%)',
         primary: {
-          DEFAULT: 'hsl(330 81% 60%)',
-          foreground: 'hsl(0 0% 98%)',
+          DEFAULT: 'hsl(45 100% 50%)',
+          foreground: 'hsl(0 0% 5%)',
         },
         secondary: {
-          DEFAULT: 'hsl(330 30% 15%)',
+          DEFAULT: 'hsl(45 30% 15%)',
           foreground: 'hsl(0 0% 98%)',
         },
         muted: {
@@ -32,21 +32,21 @@ const config: Config = {
           foreground: 'hsl(0 0% 65%)',
         },
         accent: {
-          DEFAULT: 'hsl(330 81% 60%)',
-          foreground: 'hsl(0 0% 98%)',
+          DEFAULT: 'hsl(45 100% 50%)',
+          foreground: 'hsl(0 0% 5%)',
         },
-        border: 'hsl(330 20% 20%)',
-        input: 'hsl(330 20% 20%)',
-        ring: 'hsl(330 81% 60%)',
+        border: 'hsl(45 30% 20%)',
+        input: 'hsl(45 30% 20%)',
+        ring: 'hsl(45 100% 50%)',
         card: {
           DEFAULT: 'hsl(0 0% 8%)',
           foreground: 'hsl(0 0% 98%)',
         },
       },
       borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
+        lg: '0',
+        md: '0',
+        sm: '0',
       },
       keyframes: {
         'accordion-down': {
@@ -68,4 +68,3 @@ const config: Config = {
 }
 
 export default config
-

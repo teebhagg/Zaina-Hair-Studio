@@ -1,0 +1,127 @@
+{
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "gallery": "Gallery",
+    "reviews": "Reviews",
+    "about": "About",
+    "contact": "Contact",
+    "book": "Book Appointment",
+    "quickLinks": "Quick Links",
+    "bookCTA": "Book Your Appointment",
+    "bookCTADescription": "Ready to experience luxury? Book your appointment today!",
+    "footerDescription": "Your destination for premium beauty and wellness services.",
+    "allRightsReserved": "All rights reserved."
+  },
+  "home": {
+    "hero": {
+      "title": "ZAINA'S HAIRSTUDIO",
+      "subtitle": "CELEBRITY HAIR ARTIST"
+    },
+    "services": {
+      "title": "Our Services",
+      "subtitle": "Discover our range of premium beauty services",
+      "viewAll": "View All Services"
+    },
+    "gallery": {
+      "title": "Our Work",
+      "subtitle": "See the beautiful transformations we create",
+      "viewAll": "View Full Gallery"
+    },
+    "promotions": {
+      "title": "Special Offers",
+      "subtitle": "Don't miss out on our exclusive promotions",
+      "showMore": "Show More",
+      "aboutOffer": "About This Offer",
+      "whatsIncluded": "What's Included",
+      "termsConditions": "Terms & Conditions",
+      "readyToBook": "Ready to Book?",
+      "dontMissOut": "Don't miss out on this exclusive offer!",
+      "offerValidUntil": "Offer valid until",
+      "backToHome": "Back to Home",
+      "starts": "Starts",
+      "ends": "Ends"
+    },
+    "noFeaturedServices": "No featured services yet. Mark services as \"Featured\" in the CMS to display them here.",
+    "noFeaturedGallery": "No featured gallery items yet. Mark gallery items as \"Featured\" in the CMS to display them here."
+  },
+  "services": {
+    "title": "Our Services",
+    "subtitle": "Discover our comprehensive range of beauty and wellness services",
+    "featured": "Featured",
+    "viewDetails": "View Details",
+    "bookNow": "Book Now",
+    "price": "Price",
+    "duration": "Duration",
+    "minutes": "minutes",
+    "bookService": "Book This Service"
+  },
+  "gallery": {
+    "title": "Gallery",
+    "subtitle": "Explore our beautiful work and transformations",
+    "noItems": "No gallery items yet. Check back soon!"
+  },
+  "reviews": {
+    "title": "Customer Reviews",
+    "subtitle": "See what our clients say about us",
+    "submit": "Submit Review",
+    "name": "Name",
+    "email": "Email",
+    "rating": "Rating",
+    "comment": "Comment",
+    "submitButton": "Submit Review",
+    "noReviews": "No reviews yet. Be the first to review!",
+    "basedOn": "Based on {count} reviews",
+    "ratingRequired": "Rating Required",
+    "pleaseSelectRating": "Please select a rating",
+    "thankYou": "Thank you!",
+    "reviewSubmitted": "Your review has been submitted successfully.",
+    "error": "Error",
+    "failedToSubmit": "Failed to submit review",
+    "somethingWentWrong": "Something went wrong. Please try again.",
+    "optional": "Optional",
+    "shareExperience": "Share your experience...",
+    "submitting": "Submitting..."
+  },
+  "about": {
+    "title": "About Us",
+    "values": "Our Values",
+    "team": "Our Team",
+    "specialties": "Specialties"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Get in touch with us",
+    "address": "Address",
+    "phone": "Phone",
+    "email": "Email",
+    "hours": "Opening Hours"
+  },
+  "book": {
+    "title": "Book an Appointment",
+    "subtitle": "Fill out the form below to schedule your visit",
+    "name": "Full Name",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "service": "Service",
+    "date": "Preferred Date",
+    "time": "Preferred Time",
+    "notes": "Additional Notes",
+    "submit": "Book Appointment",
+    "success": "Appointment booked successfully!",
+    "error": "Failed to book appointment. Please try again.",
+    "successDescription": "We will send you a confirmation email shortly.",
+    "errorDescription": "Failed to book appointment. Please try again.",
+    "selectService": "Select a service",
+    "notesPlaceholder": "Any special requests or notes...",
+    "booking": "Booking...",
+    "optional": "Optional"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous"
+  }
+}

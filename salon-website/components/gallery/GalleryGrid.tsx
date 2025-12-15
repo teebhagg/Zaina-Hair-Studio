@@ -1,14 +1,15 @@
-'use client'
+"use client";
 
-import { GalleryItem } from './GalleryItem'
-import { motion } from 'framer-motion'
+import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
+import { GalleryItem } from "./GalleryItem";
 
 interface GalleryGridProps {
-  gallery: any[]
+  gallery: any[];
 }
 
 export function GalleryGrid({ gallery }: GalleryGridProps) {
-  // Staggered container animation
+  const { t } = useTranslation();
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -18,14 +19,14 @@ export function GalleryGrid({ gallery }: GalleryGridProps) {
         delayChildren: 0.1,
       },
     },
-  }
+  };
 
   if (gallery.length === 0) {
     return (
       <div className="text-center py-12">
-        <p className="text-muted-foreground">No gallery items yet. Check back soon!</p>
+        <p className="text-muted-foreground">{t("gallery.noItems")}</p>
       </div>
-    )
+    );
   }
 
   return (
@@ -33,11 +34,10 @@ export function GalleryGrid({ gallery }: GalleryGridProps) {
       variants={container}
       initial="hidden"
       animate="show"
-      className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4"
-    >
+      className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
       {gallery.map((item: any, index: number) => (
         <GalleryItem key={item._id} {...item} index={index} />
       ))}
     </motion.div>
-  )
+  );
 }
