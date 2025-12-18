@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button'
@@ -32,19 +32,46 @@ export function ReviewReplyForm({
 }: ReviewReplyFormProps) {
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
+  const [adminName, setAdminName] = useState<string>('Admin')
+
+  // Fetch admin name when form opens
+  useEffect(() => {
+    if (open) {
+      async function fetchAdminName() {
+        try {
+          const res = await fetch('/api/admin/me')
+          if (res.ok) {
+            const data = await res.json()
+            setAdminName(data.name || 'Admin')
+          }
+        } catch (error) {
+          console.error('Error fetching admin name:', error)
+        }
+      }
+      fetchAdminName()
+    }
+  }, [open])
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm<ReviewReplyFormData>({
     resolver: zodResolver(reviewReplySchema),
     defaultValues: {
       text: '',
-      author: 'Admin',
+      author: adminName,
     },
   })
+
+  // Update form value when admin name is fetched
+  useEffect(() => {
+    if (adminName) {
+      setValue('author', adminName)
+    }
+  }, [adminName, setValue])
 
   const onFormSubmit = async (data: ReviewReplyFormData) => {
     setIsLoading(true)
@@ -85,6 +112,7 @@ export function ReviewReplyForm({
               id="author"
               type="text"
               {...register('author')}
+              defaultValue={adminName}
               className="flex h-10 w-full rounded-xl border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               placeholder="Admin"
             />

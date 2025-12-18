@@ -16,6 +16,7 @@ interface PromotionCardProps {
   ctaText?: string
   ctaLink?: string
   bannerImage?: string
+  images?: string[]
 }
 
 export function PromotionCard({
@@ -26,6 +27,7 @@ export function PromotionCard({
   ctaText,
   ctaLink,
   bannerImage,
+  images,
 }: PromotionCardProps) {
   const pathname = usePathname()
   const locale = pathname.split('/')[1] || 'en'
@@ -33,6 +35,9 @@ export function PromotionCard({
   
   // Link to promotion detail page
   const detailLink = `/${locale}/promotions/${slug.current}`
+  
+  // Use images array if available, otherwise fall back to bannerImage
+  const displayImage = images && images.length > 0 ? images[0] : bannerImage
 
   return (
     <motion.div
@@ -41,41 +46,36 @@ export function PromotionCard({
       viewport={{ once: true }}
       whileHover={{ y: -5 }}
       transition={{ duration: 0.3 }}
-      className="group relative h-80 overflow-hidden rounded-sm border border-border bg-card"
+      className="group relative overflow-hidden border border-border bg-card"
     >
-      {bannerImage && (
-        <div className="absolute inset-0">
+      {displayImage && (
+        <div className="relative w-full aspect-[4/3]">
           <Image
-            src={bannerImage}
+            src={displayImage}
             alt={title}
             fill
-            className="object-cover transition-transform duration-500 group-hover:scale-110"
+            className="object-contain transition-transform duration-500 group-hover:scale-105"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
         </div>
       )}
-      <div className="absolute inset-0 flex flex-col justify-end p-6">
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-        >
-          <h3 className="text-2xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
+      <div className="p-6 space-y-4">
+        <div>
+          <h3 className="text-2xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
             {title}
           </h3>
-          <p className="text-muted-foreground mb-6 line-clamp-2">
+          <p className="text-muted-foreground line-clamp-2">
             {shortText}
           </p>
-          <div className="flex gap-3">
-            <Button asChild size="lg" variant="outline" className="flex-1">
-              <Link href={detailLink} className="flex items-center justify-center gap-2">
-                {t('home.promotions.showMore')}
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-        </motion.div>
+        </div>
+        <div className="flex gap-3">
+          <Button asChild size="lg" variant="outline" className="w-full">
+            <Link href={detailLink} className="flex items-center justify-center gap-2">
+              {t('home.promotions.showMore')}
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
       </div>
     </motion.div>
   )

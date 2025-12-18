@@ -9,15 +9,25 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Star } from 'lucide-react'
+import { Star, Loader2 } from 'lucide-react'
 import { useToast } from '@/components/ui/use-toast'
 import { submitReview } from '@/app/[lang]/actions/reviews'
 import { useTranslation } from 'react-i18next'
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 
 export function ReviewForm() {
   const { t } = useTranslation()
   const [rating, setRating] = useState(0)
   const [hoveredRating, setHoveredRating] = useState(0)
+  const [confirmOpen, setConfirmOpen] = useState(false)
+  const [pendingData, setPendingData] = useState<ReviewFormData | null>(null)
+  const [isConfirming, setIsConfirming] = useState(false)
   const { toast } = useToast()
   const {
     register,
@@ -32,7 +42,7 @@ export function ReviewForm() {
     },
   })
 
-  const onSubmit = async (data: ReviewFormData) => {
+  const onSubmit = (data: ReviewFormData) => {
     if (rating === 0) {
       toast({
         title: t('reviews.ratingRequired'),
@@ -42,8 +52,16 @@ export function ReviewForm() {
       return
     }
 
+    setPendingData({ ...data, rating })
+    setConfirmOpen(true)
+  }
+
+  const handleConfirm = async () => {
+    if (!pendingData || isConfirming) return
+
+    setIsConfirming(true)
     try {
-      const result = await submitReview({ ...data, rating })
+      const result = await submitReview(pendingData)
       if (result.success) {
         toast({
           title: t('reviews.thankYou'),
@@ -51,6 +69,8 @@ export function ReviewForm() {
         })
         reset()
         setRating(0)
+        setPendingData(null)
+        setConfirmOpen(false)
         // Dispatch custom event to refresh reviews list
         window.dispatchEvent(new Event('reviewSubmitted'))
       } else {
@@ -66,6 +86,8 @@ export function ReviewForm() {
         description: t('reviews.somethingWentWrong'),
         variant: 'destructive',
       })
+    } finally {
+      setIsConfirming(false)
     }
   }
 
@@ -157,6 +179,57 @@ export function ReviewForm() {
           </Button>
         </form>
       </CardContent>
+      <Dialog open={confirmOpen} onOpenChange={setConfirmOpen}>
+        <DialogContent className="bg-black text-foreground border-border">
+          <DialogHeader>
+            <DialogTitle>
+              {t('reviews.confirmTitle', 'Confirm review submission')}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-2 text-sm">
+            <p>
+              <span className="font-medium">{t('reviews.name')}:</span>{' '}
+              {pendingData?.author || '-'}
+            </p>
+            <p>
+              <span className="font-medium">{t('reviews.rating')}:</span>{' '}
+              {pendingData?.rating || rating}/5
+            </p>
+            <p>
+              <span className="font-medium">{t('reviews.comment')}:</span>{' '}
+              {pendingData?.text || '-'}
+            </p>
+          </div>
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              className="border-border"
+              onClick={() => {
+                setConfirmOpen(false)
+                setPendingData(null)
+              }}
+            >
+              {t('common.back')}
+            </Button>
+            <Button
+              type="button"
+              onClick={handleConfirm}
+              disabled={isConfirming}
+              className="bg-primary text-primary-foreground hover:bg-primary/90"
+            >
+              {isConfirming ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  {t('reviews.submitting')}
+                </>
+              ) : (
+                t('reviews.confirmAction', 'Confirm')
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Card>
   )
 }

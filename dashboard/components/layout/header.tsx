@@ -55,10 +55,10 @@ export function Header() {
         <Button
           variant="ghost"
           size="icon"
-          className="hidden md:flex"
+          className="hidden md:flex h-9 w-9 rounded-lg border border-border/50 bg-background hover:bg-accent hover:border-border transition-all duration-200 shadow-sm hover:shadow-md"
           onClick={() => setIsOpen(!isOpen)}
         >
-          <PanelLeft className="h-5 w-5" />
+          <PanelLeft className="h-4 w-4" />
           <span className="sr-only">Toggle Sidebar</span>
         </Button>
 
@@ -68,13 +68,13 @@ export function Header() {
         {/* Mobile sidebar sheet */}
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="md:hidden">
-              <Menu className="h-5 w-5" />
+            <Button variant="ghost" size="icon" className="md:hidden h-9 w-9 rounded-lg border border-border/50 bg-background hover:bg-accent hover:border-border transition-all duration-200 shadow-sm hover:shadow-md">
+              <Menu className="h-4 w-4" />
               <span className="sr-only">Toggle Menu</span>
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="w-64 p-0">
-            <Sidebar />
+            <Sidebar isCollapsed={!isOpen} />
           </SheetContent>
         </Sheet>
       </div>

@@ -32,6 +32,8 @@
       "title": "Special Offers",
       "subtitle": "Don't miss out on our exclusive promotions",
       "showMore": "Show More",
+      "bookNow": "Book Now",
+      "images": "images",
       "aboutOffer": "About This Offer",
       "whatsIncluded": "What's Included",
       "termsConditions": "Terms & Conditions",
@@ -54,7 +56,8 @@
     "price": "Price",
     "duration": "Duration",
     "minutes": "minutes",
-    "bookService": "Book This Service"
+    "bookService": "Book This Service",
+    "images": "images"
   },
   "gallery": {
     "title": "Gallery",
@@ -107,13 +110,15 @@
     "date": "Preferred Date",
     "time": "Preferred Time",
     "notes": "Additional Notes",
+    "extras": "Optional Extras",
+    "extrasDescription": "Choose any extras you want to add to this service. Each extra may add additional cost and time.",
     "submit": "Book Appointment",
     "success": "Appointment booked successfully!",
     "error": "Failed to book appointment. Please try again.",
     "successDescription": "We will send you a confirmation email shortly.",
     "errorDescription": "Failed to book appointment. Please try again.",
     "selectService": "Select a service",
-    "notesPlaceholder": "Any special requests or notes...",
+    "notesPlaceholder": "Any special requests, extras details, or notes...",
     "booking": "Booking...",
     "optional": "Optional"
   },

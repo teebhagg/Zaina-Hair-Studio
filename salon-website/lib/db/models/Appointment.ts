@@ -6,9 +6,12 @@ export interface IAppointment extends mongoose.Document {
   phone: string
   service: string
   serviceName?: string
+  serviceType?: string
+  extras?: string[]
   date: Date
   time: string
   note?: string
+  price?: number
   status: 'pending' | 'approved' | 'completed' | 'cancelled'
   customerId?: mongoose.Types.ObjectId
   createdAt: Date
@@ -38,6 +41,14 @@ const AppointmentSchema = new Schema<IAppointment>(
     serviceName: {
       type: String,
     },
+    serviceType: {
+      type: String,
+      description: 'Service type ID or slug (e.g., hair-cut, nail-treatment)',
+    },
+    extras: {
+      type: [String],
+      default: [],
+    },
     date: {
       type: Date,
       required: true,
@@ -48,6 +59,10 @@ const AppointmentSchema = new Schema<IAppointment>(
     },
     note: {
       type: String,
+    },
+    price: {
+      type: Number,
+      default: 0,
     },
     status: {
       type: String,
@@ -65,6 +80,7 @@ const AppointmentSchema = new Schema<IAppointment>(
 )
 
 AppointmentSchema.index({ date: 1, time: 1 })
+AppointmentSchema.index({ date: 1, time: 1, serviceType: 1 })
 AppointmentSchema.index({ email: 1 })
 
 export default models.Appointment || model<IAppointment>('Appointment', AppointmentSchema)

@@ -21,7 +21,8 @@ interface ServiceCardProps {
   price: number;
   duration: number;
   description: string;
-  image: string;
+  image?: string;
+  images?: string[];
   featured?: boolean;
 }
 
@@ -33,11 +34,15 @@ export function ServiceCard({
   duration,
   description,
   image,
+  images,
   featured,
 }: ServiceCardProps) {
   const { t } = useTranslation();
   const pathname = usePathname();
   const locale = pathname.split("/")[1] || "en";
+
+  // Use images array if available, otherwise fall back to single image
+  const displayImage = images && images.length > 0 ? images[0] : image;
 
   return (
     <motion.div
@@ -46,20 +51,22 @@ export function ServiceCard({
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}>
       <Card className="overflow-hidden hover:shadow-xl transition-shadow">
-        <div className="relative h-48 w-full">
-          <Image
-            src={image}
-            alt={name}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
-          {featured && (
-            <div className="absolute top-2 right-2 bg-primary text-primary-foreground px-2 py-1 text-xs font-semibold">
-              {t("services.featured")}
-            </div>
-          )}
-        </div>
+        {displayImage && (
+          <div className="relative h-48 w-full">
+            <Image
+              src={displayImage}
+              alt={name}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+            {featured && (
+              <div className="absolute top-2 right-2 bg-primary text-primary-foreground px-2 py-1 text-xs font-semibold">
+                {t("services.featured")}
+              </div>
+            )}
+          </div>
+        )}
         <CardHeader>
           <h3 className="text-xl font-semibold">{name}</h3>
           <p className="text-sm text-muted-foreground line-clamp-2">

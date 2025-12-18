@@ -10,8 +10,16 @@ export function servicesQuery(locale: Locale = "en") {
       price,
       duration,
       description,
+      extras[]{
+        name,
+        price,
+        duration,
+        description
+      },
       featured,
-      "image": image.asset->url
+      "images": images[].asset->url,
+      "image": image.asset->url,
+      "serviceType": serviceType->slug.current
     }`;
   }
 
@@ -25,8 +33,16 @@ export function servicesQuery(locale: Locale = "en") {
     duration,
     description,
     description_de,
+    extras[]{
+      name,
+      price,
+      duration,
+      description
+    },
     featured,
-    "image": image.asset->url
+    "images": images[].asset->url,
+    "image": image.asset->url,
+    "serviceType": serviceType->slug.current
   }`;
 }
 
@@ -39,8 +55,16 @@ export function serviceBySlugQuery(locale: Locale = "en") {
       price,
       duration,
       description,
+      extras[]{
+        name,
+        price,
+        duration,
+        description
+      },
       featured,
-      "image": image.asset->url
+      "images": images[].asset->url,
+      "image": image.asset->url,
+      "serviceType": serviceType->slug.current
     }`;
   }
 
@@ -53,8 +77,16 @@ export function serviceBySlugQuery(locale: Locale = "en") {
     duration,
     description,
     description_de,
+    extras[]{
+      name,
+      price,
+      duration,
+      description
+    },
     featured,
-    "image": image.asset->url
+    "images": images[].asset->url,
+    "image": image.asset->url,
+    "serviceType": serviceType->slug.current
   }`;
 }
 
@@ -67,7 +99,9 @@ export function featuredServicesQuery(locale: Locale = "en") {
       price,
       duration,
       description,
-      "image": image.asset->url
+      "images": images[].asset->url,
+      "image": image.asset->url,
+      "serviceType": serviceType->slug.current
     }`;
   }
 
@@ -80,7 +114,9 @@ export function featuredServicesQuery(locale: Locale = "en") {
     duration,
     description,
     description_de,
-    "image": image.asset->url
+    "images": images[].asset->url,
+    "image": image.asset->url,
+    "serviceType": serviceType->slug.current
   }`;
 }
 
@@ -135,6 +171,7 @@ export function promotionsQuery(locale: Locale = "en") {
       ctaLink,
       startDate,
       endDate,
+      "images": images[].asset->url,
       "bannerImage": bannerImage.asset->url
     }`;
   }
@@ -151,6 +188,7 @@ export function promotionsQuery(locale: Locale = "en") {
     ctaLink,
     startDate,
     endDate,
+    "images": images[].asset->url,
     "bannerImage": bannerImage.asset->url
   }`;
 }
@@ -170,6 +208,7 @@ export function promotionBySlugQuery(locale: Locale = "en") {
       startDate,
       endDate,
       active,
+      "images": images[].asset->url,
       "bannerImage": bannerImage.asset->url
     }`;
   }
@@ -193,6 +232,7 @@ export function promotionBySlugQuery(locale: Locale = "en") {
     startDate,
     endDate,
     active,
+    "images": images[].asset->url,
     "bannerImage": bannerImage.asset->url
   }`;
 }
@@ -212,7 +252,15 @@ export function homepageQuery(locale: Locale = "en") {
         price,
         duration,
         description,
-        "image": image.asset->url
+        extras[]{
+          name,
+          price,
+          duration,
+          description
+        },
+        "images": images[].asset->url,
+        "image": image.asset->url,
+        "serviceType": serviceType->slug.current
       },
       featuredGallery[]->{
         _id,
@@ -242,7 +290,15 @@ export function homepageQuery(locale: Locale = "en") {
       duration,
       description,
       description_de,
-      "image": image.asset->url
+        extras[]{
+          name,
+          price,
+          duration,
+          description
+        },
+      "images": images[].asset->url,
+      "image": image.asset->url,
+      "serviceType": serviceType->slug.current
     },
     featuredGallery[]->{
       _id,

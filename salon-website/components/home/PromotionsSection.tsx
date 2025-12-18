@@ -65,6 +65,7 @@ export function PromotionsSection({ promotions }: PromotionsSectionProps) {
               ctaText={promo.ctaText}
               ctaLink={promo.ctaLink}
               bannerImage={promo.bannerImage}
+              images={promo.images}
             />
           </motion.div>
         ))}

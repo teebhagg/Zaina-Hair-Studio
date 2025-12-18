@@ -8,6 +8,8 @@ export const appointmentSchema = z.object({
   date: z.string().min(1, 'Please select a date'),
   time: z.string().min(1, 'Please select a time'),
   note: z.string().optional(),
+  extras: z.array(z.string()).optional(),
+  price: z.number().min(0).optional(),
 })
 
 export type AppointmentFormData = z.infer<typeof appointmentSchema>

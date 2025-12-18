@@ -13,6 +13,7 @@ export const appointmentUpdateSchema = z.object({
   phone: z.string().min(1, 'Phone is required').max(20, 'Phone must be less than 20 characters'),
   service: z.string().min(1, 'Service is required'),
   serviceName: z.string().optional(),
+  serviceType: z.string().optional(),
   date: z.string().min(1, 'Date is required'),
   time: z.string().min(1, 'Time is required'),
   note: z.string().max(500, 'Note must be less than 500 characters').optional(),

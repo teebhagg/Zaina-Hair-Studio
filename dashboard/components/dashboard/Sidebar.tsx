@@ -7,11 +7,6 @@ import {
   LayoutDashboard,
   Calendar,
   MessageSquare,
-  Megaphone,
-  Tag,
-  Image as ImageIcon,
-  User,
-  Users,
   LogOut,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -19,25 +14,12 @@ import { cn } from '@/lib/utils'
 
 const navItems = [
   {
-    group: 'General',
+    group: 'Main',
     items: [
       { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
       { href: '/dashboard/appointments', label: 'Appointments', icon: Calendar },
       { href: '/dashboard/reviews', label: 'Reviews', icon: MessageSquare },
-      { href: '/dashboard/profiles', label: 'Profiles', icon: Users },
     ],
-  },
-  {
-    group: 'Content',
-    items: [
-      { href: '/dashboard/announcements', label: 'Announcements', icon: Megaphone },
-      { href: '/dashboard/promotions', label: 'Deals', icon: Tag },
-      { href: '/dashboard/gallery', label: 'Gallery', icon: ImageIcon },
-    ],
-  },
-  {
-    group: 'Account',
-    items: [{ href: '/dashboard/profile', label: 'Profile', icon: User }],
   },
 ]
 
@@ -48,9 +30,8 @@ export function Sidebar() {
     <aside className="w-64 border-r border-border bg-card h-screen sticky top-0">
       <div className="p-6">
         <div className="mb-8">
-          <h1 className="text-xl font-bold">Shadcnblocks</h1>
-          <p className="text-xs text-muted-foreground">Admin Dashboard</p>
-          <p className="text-xs text-muted-foreground mt-1">Nextjs + shadcn/ui</p>
+          <h1 className="text-xl font-bold">Salon Dashboard</h1>
+          <p className="text-xs text-muted-foreground">Admin Panel</p>
         </div>
         <nav className="space-y-6">
           {navItems.map((group) => (

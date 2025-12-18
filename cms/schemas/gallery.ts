@@ -4,7 +4,22 @@ export default defineType({
   name: 'gallery',
   title: 'Gallery',
   type: 'document',
+  groups: [
+    {
+      name: 'english',
+      title: '🇬🇧 English',
+    },
+    {
+      name: 'german',
+      title: '🇩🇪 German (Deutsch)',
+    },
+    {
+      name: 'details',
+      title: 'Details',
+    },
+  ],
   fields: [
+    // Image (language-independent)
     defineField({
       name: 'image',
       title: 'Image',
@@ -13,12 +28,27 @@ export default defineType({
         hotspot: true,
       },
       validation: (Rule) => Rule.required(),
+      group: 'details',
     }),
+    
+    // English Content
     defineField({
       name: 'caption',
       title: 'Caption',
       type: 'string',
+      group: 'english',
     }),
+    
+    // German Content
+    defineField({
+      name: 'caption_de',
+      title: 'Caption (German)',
+      type: 'string',
+      description: 'German translation of the caption',
+      group: 'german',
+    }),
+    
+    // Details (language-independent)
     defineField({
       name: 'category',
       title: 'Category',
@@ -33,12 +63,14 @@ export default defineType({
         ],
       },
       initialValue: 'general',
+      group: 'details',
     }),
     defineField({
       name: 'featured',
       title: 'Featured',
       type: 'boolean',
       initialValue: false,
+      group: 'details',
     }),
   ],
   preview: {
@@ -56,4 +88,3 @@ export default defineType({
     },
   },
 })
-

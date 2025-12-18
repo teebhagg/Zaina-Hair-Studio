@@ -34,6 +34,15 @@ export default (S: StructureBuilder) =>
       S.documentTypeListItem('gallery').title('Gallery'),
       S.documentTypeListItem('promotion').title('Promotions'),
       S.documentTypeListItem('announcement').title('Announcements'),
-      S.documentTypeListItem('team').title('Team Members'),
+      // S.documentTypeListItem('team').title('Team Members'),
+      // Site Settings
+      S.listItem()
+        .title('Site Settings')
+        .child(
+          S.document()
+            .title('Site Settings')
+            .schemaType('siteSettings')
+            .documentId('siteSettings')
+        ),
     ])
 

@@ -1,4 +1,11 @@
 import { Button } from "@/components/ui/button";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import { locales, type Locale } from "@/lib/i18n";
 import { client, isSanityConfigured } from "@/lib/sanity/client";
 import { promotionBySlugQuery } from "@/lib/sanity/queries";
@@ -64,119 +71,146 @@ export default async function PromotionDetailPage({
   const startDate = formatDate(translatedPromotion.startDate);
   const endDate = formatDate(translatedPromotion.endDate);
 
+  // Use images array if available, otherwise fall back to bannerImage
+  const promotionImages =
+    translatedPromotion.images && translatedPromotion.images.length > 0
+      ? translatedPromotion.images
+      : translatedPromotion.bannerImage
+        ? [translatedPromotion.bannerImage]
+        : [];
+
   return (
     <div className="min-h-screen">
-      {/* Hero Section with Banner Image */}
-      <section className="relative h-[60vh] min-h-[400px]">
-        {translatedPromotion.bannerImage && (
-          <Image
-            src={translatedPromotion.bannerImage}
-            alt={translatedPromotion.title}
-            fill
-            className="object-cover"
-            priority
-          />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/40" />
-        <div className="absolute inset-0 flex items-end">
-          <div className="container mx-auto px-4 pb-12">
-            <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-4">
-              {translatedPromotion.title}
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl">
-              {translatedPromotion.shortText}
-            </p>
-          </div>
-        </div>
-      </section>
-
       {/* Content Section */}
-      <section className="container mx-auto px-4 py-16">
-        <div className="grid lg:grid-cols-3 gap-12">
+      <section className="container mx-auto px-4 py-12">
+        <div className="grid gap-8 md:grid-cols-2">
+          {/* Image Carousel */}
+          {promotionImages.length > 0 && (
+            <div className="relative min-h-96 md:min-h-[700px] w-full">
+              <Carousel className="w-full h-full">
+                <CarouselContent className="h-full ml-0">
+                  {promotionImages.map((img: string, index: number) => (
+                    <CarouselItem
+                      key={index}
+                      className="pl-0 basis-full"
+                      style={{ height: "100%" }}>
+                      <div
+                        className="relative w-full overflow-hidden min-h-96 md:min-h-[800px]"
+                        style={{ height: "100%" }}>
+                        <Image
+                          src={img}
+                          alt={`${translatedPromotion.title} - Image ${index + 1}`}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          priority={index === 0}
+                        />
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                {promotionImages.length > 1 && (
+                  <>
+                    <CarouselPrevious />
+                    <CarouselNext />
+                  </>
+                )}
+              </Carousel>
+            </div>
+          )}
+
           {/* Main Content */}
-          <div className="lg:col-span-2 space-y-8">
-            {/* Promotion Period */}
-            {(startDate || endDate) && (
-              <div className="flex flex-wrap gap-6 p-6 bg-card border border-border rounded-sm">
-                {startDate && (
-                  <div className="flex items-center gap-3">
-                    <Calendar className="h-5 w-5 text-primary" />
-                    <div>
-                      <p className="text-sm text-muted-foreground">{dict.home.promotions.starts}</p>
-                      <p className="font-semibold">{startDate}</p>
-                    </div>
-                  </div>
-                )}
-                {endDate && (
-                  <div className="flex items-center gap-3">
-                    <Clock className="h-5 w-5 text-primary" />
-                    <div>
-                      <p className="text-sm text-muted-foreground">{dict.home.promotions.ends}</p>
-                      <p className="font-semibold">{endDate}</p>
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
+          <div className="space-y-6">
+            <div>
+              <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                {translatedPromotion.title}
+              </h1>
+              <p className="text-lg text-muted-foreground">
+                {translatedPromotion.shortText}
+              </p>
+            </div>
 
-            {/* Full Description */}
-            {translatedPromotion.fullDescription && (
-              <div>
-                <h2 className="text-3xl font-bold mb-4">{dict.home.promotions.aboutOffer}</h2>
-                <p className="text-muted-foreground text-lg leading-relaxed whitespace-pre-line">
-                  {translatedPromotion.fullDescription}
-                </p>
-              </div>
-            )}
-
-            {/* Features/Benefits */}
-            {translatedPromotion.features &&
-              translatedPromotion.features.length > 0 && (
-                <div>
-                  <h2 className="text-3xl font-bold mb-6">{dict.home.promotions.whatsIncluded}</h2>
-                  <ul className="space-y-4">
-                    {translatedPromotion.features.map(
-                      (feature: string, index: number) => (
-                        <li key={index} className="flex items-start gap-3">
-                          <CheckCircle2 className="h-6 w-6 text-primary flex-shrink-0 mt-0.5" />
-                          <span className="text-muted-foreground text-lg">
-                            {feature}
-                          </span>
-                        </li>
-                      )
-                    )}
-                  </ul>
+            <div className="space-y-8">
+              {/* Promotion Period */}
+              {(startDate || endDate) && (
+                <div className="flex flex-wrap gap-6 p-6 bg-card border border-border rounded-sm">
+                  {startDate && (
+                    <div className="flex items-center gap-3">
+                      <Calendar className="h-5 w-5 text-primary" />
+                      <div>
+                        <p className="text-sm text-muted-foreground">
+                          {dict.home.promotions.starts}
+                        </p>
+                        <p className="font-semibold">{startDate}</p>
+                      </div>
+                    </div>
+                  )}
+                  {endDate && (
+                    <div className="flex items-center gap-3">
+                      <Clock className="h-5 w-5 text-primary" />
+                      <div>
+                        <p className="text-sm text-muted-foreground">
+                          {dict.home.promotions.ends}
+                        </p>
+                        <p className="font-semibold">{endDate}</p>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
 
-            {/* Terms & Conditions */}
-            {translatedPromotion.terms && (
-              <div className="p-6 bg-muted/30 border border-border rounded-sm">
-                <div className="flex items-center gap-2 mb-4">
-                  <FileText className="h-5 w-5 text-primary" />
-                  <h3 className="text-xl font-semibold">
-                    {dict.home.promotions.termsConditions}
-                  </h3>
+              {/* Full Description */}
+              {translatedPromotion.fullDescription && (
+                <div>
+                  <h2 className="text-3xl font-bold mb-4">
+                    {dict.home.promotions.aboutOffer}
+                  </h2>
+                  <p className="text-muted-foreground text-lg leading-relaxed whitespace-pre-line">
+                    {translatedPromotion.fullDescription}
+                  </p>
                 </div>
-                <p className="text-sm text-muted-foreground whitespace-pre-line">
-                  {translatedPromotion.terms}
-                </p>
-              </div>
-            )}
-          </div>
+              )}
 
-          {/* Sidebar - CTA */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-24 p-6 bg-card border border-border rounded-sm space-y-6">
-              <div>
-                <h3 className="text-2xl font-bold mb-2">{dict.home.promotions.readyToBook}</h3>
-                <p className="text-muted-foreground">
-                  {dict.home.promotions.dontMissOut}
-                </p>
-              </div>
+              {/* Features/Benefits */}
+              {translatedPromotion.features &&
+                translatedPromotion.features.length > 0 && (
+                  <div>
+                    <h2 className="text-3xl font-bold mb-6">
+                      {dict.home.promotions.whatsIncluded}
+                    </h2>
+                    <ul className="space-y-4">
+                      {translatedPromotion.features.map(
+                        (feature: string, index: number) => (
+                          <li key={index} className="flex items-start gap-3">
+                            <CheckCircle2 className="h-6 w-6 text-primary shrink-0 mt-0.5" />
+                            <span className="text-muted-foreground text-lg">
+                              {feature}
+                            </span>
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  </div>
+                )}
 
-              <Button asChild size="lg" className="w-full text-lg py-6">
-                <Link href={ctaLink}>
+              {/* Terms & Conditions */}
+              {translatedPromotion.terms && (
+                <div className="p-6 bg-muted/30 border border-border rounded-sm">
+                  <div className="flex items-center gap-2 mb-4">
+                    <FileText className="h-5 w-5 text-primary" />
+                    <h3 className="text-xl font-semibold">
+                      {dict.home.promotions.termsConditions}
+                    </h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground whitespace-pre-line">
+                    {translatedPromotion.terms}
+                  </p>
+                </div>
+              )}
+
+              {/* CTA Button */}
+              <Button asChild size="lg" className="w-full">
+                <Link href={`/${lang}/book?promotion=${slug}`}>
                   {translatedPromotion.ctaText || "Book Now"}
                 </Link>
               </Button>
@@ -186,12 +220,6 @@ export default async function PromotionDetailPage({
                   {dict.home.promotions.offerValidUntil} {endDate}
                 </p>
               )}
-
-              <div className="pt-6 border-t border-border">
-                <Button asChild variant="outline" className="w-full">
-                  <Link href={`/${lang}`}>{dict.home.promotions.backToHome}</Link>
-                </Button>
-              </div>
             </div>
           </div>
         </div>

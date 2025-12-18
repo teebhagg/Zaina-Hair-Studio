@@ -1,18 +1,31 @@
-import { ReviewsTable } from "@/components/dashboard/ReviewsTable";
-import Review from "@/lib/db/models/Review";
+import { Review } from "@/components/reviews/columns";
+import { ReviewsPageClient } from "@/components/reviews/reviews-page-client";
+import ReviewModel from "@/lib/db/models/Review";
 import connectDB from "@/lib/db/mongoose";
+import { Metadata } from "next";
 
-async function getReviews() {
+export const metadata: Metadata = {
+  title: "Reviews",
+  description: "Manage customer reviews.",
+};
+
+export const dynamic = "force-dynamic";
+
+async function getReviews(): Promise<Review[]> {
   try {
-    if (!process.env.MONGODB_URI) {
-      return [];
-    }
     await connectDB();
-    const reviews = await Review.find().sort({ createdAt: -1 }).lean();
+    const reviews = await ReviewModel.find({}).sort({ createdAt: -1 }).lean();
+
     return reviews.map((review: any) => ({
-      ...review,
-      _id: review._id.toString(),
-      createdAt: review.createdAt.toString(),
+      id: review._id.toString(),
+      name: review.author || "Anonymous",
+      rating: review.rating,
+      comment: review.text || "",
+      date:
+        review.createdAt instanceof Date
+          ? review.createdAt.toISOString().split("T")[0]
+          : review.createdAt,
+      status: review.verified ? "published" : "pending",
     }));
   } catch (error) {
     console.error("Error fetching reviews:", error);
@@ -21,20 +34,7 @@ async function getReviews() {
 }
 
 export default async function ReviewsPage() {
-  const reviews = await getReviews();
+  const data = await getReviews();
 
-  return (
-    <div className="space-y-6">
-      <div>
-        <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-          <span>1. Home</span>
-          <span>/</span>
-          <span className="text-foreground">Reviews</span>
-        </nav>
-        <h1 className="text-4xl font-bold mb-2">Review List</h1>
-      </div>
-
-      <ReviewsTable reviews={reviews as any} />
-    </div>
-  );
+  return <ReviewsPageClient initialReviews={data} />;
 }
