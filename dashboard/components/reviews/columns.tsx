@@ -1,34 +1,42 @@
-"use client"
+"use client";
 
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown, MoreHorizontal, MessageSquare, Trash2, Star } from "lucide-react"
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { ColumnDef } from "@tanstack/react-table";
+import {
+  ArrowUpDown,
+  MessageSquare,
+  MoreHorizontal,
+  Star,
+  Trash2,
+} from "lucide-react";
 
 export type Review = {
-  id: string
-  name: string
-  rating: number
-  comment: string
-  date: string
-  status: "published" | "pending" | "rejected"
-}
+  id: string;
+  name: string;
+  rating: number;
+  comment: string;
+  date: string;
+  status: "published" | "pending" | "rejected";
+};
 
 interface ColumnsProps {
-  onView?: (reviewId: string) => void
-  onDelete?: (reviewId: string) => void
+  onView?: (reviewId: string) => void;
+  onDelete?: (reviewId: string) => void;
 }
 
-export const createColumns = ({ onView, onDelete }: ColumnsProps): ColumnDef<Review>[] => [
+export const createColumns = ({
+  onView,
+  onDelete,
+}: ColumnsProps): ColumnDef<Review>[] => [
   {
     id: "select",
     header: ({ table }) => (
@@ -55,11 +63,7 @@ export const createColumns = ({ onView, onDelete }: ColumnsProps): ColumnDef<Rev
     accessorKey: "name",
     header: "Customer",
     cell: ({ row }) => {
-      return (
-        <div className="min-w-[120px]">
-          {row.getValue("name")}
-        </div>
-      )
+      return <div className="min-w-[120px]">{row.getValue("name")}</div>;
     },
   },
   {
@@ -69,15 +73,14 @@ export const createColumns = ({ onView, onDelete }: ColumnsProps): ColumnDef<Rev
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="min-w-[140px]"
-        >
+          className="min-w-[140px]">
           Rating
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
     cell: ({ row }) => {
-      const rating = row.getValue("rating") as number
+      const rating = row.getValue("rating") as number;
       return (
         <div className="flex items-center justify-center ">
           <div className="hidden md:flex items-center justify-content-center">
@@ -97,19 +100,21 @@ export const createColumns = ({ onView, onDelete }: ColumnsProps): ColumnDef<Rev
             <Star className="h-4 w-4 ml-1 fill-yellow-400 text-yellow-400" />
           </div>
         </div>
-      )
+      );
     },
   },
   {
     accessorKey: "comment",
     header: "Comment",
     cell: ({ row }) => {
-      const comment = row.getValue("comment") as string
+      const comment = row.getValue("comment") as string;
       return (
-        <div className="max-w-[180px] md:max-w-[360px] truncate" title={comment}>
+        <div
+          className="max-w-[180px] md:max-w-[360px] truncate"
+          title={comment}>
           {comment}
         </div>
-      )
+      );
     },
     enableHiding: true,
   },
@@ -117,19 +122,15 @@ export const createColumns = ({ onView, onDelete }: ColumnsProps): ColumnDef<Rev
     accessorKey: "date",
     header: "Date",
     cell: ({ row }) => {
-      const date = row.getValue("date") as string
-      return (
-        <div className="whitespace-nowrap min-w-[80px]">
-          {date}
-        </div>
-      )
+      const date = row.getValue("date") as string;
+      return <div className="whitespace-nowrap min-w-[80px]">{date}</div>;
     },
     enableHiding: true,
   },
   {
     id: "actions",
     cell: ({ row }) => {
-      const review = row.original
+      const review = row.original;
 
       return (
         <DropdownMenu>
@@ -148,26 +149,24 @@ export const createColumns = ({ onView, onDelete }: ColumnsProps): ColumnDef<Rev
               </DropdownMenuItem>
             )}
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(review.id)}
-            >
+              onClick={() => navigator.clipboard.writeText(review.id)}>
               Copy review ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             {onDelete && (
               <DropdownMenuItem
                 onClick={() => onDelete(review.id)}
-                className="text-destructive"
-              >
+                className="text-destructive">
                 <Trash2 className="mr-2 h-4 w-4" />
                 Delete
               </DropdownMenuItem>
             )}
           </DropdownMenuContent>
         </DropdownMenu>
-      )
+      );
     },
   },
-]
+];
 
 // Default export for backward compatibility
-export const columns: ColumnDef<Review>[] = createColumns({})
+export const columns: ColumnDef<Review>[] = createColumns({});

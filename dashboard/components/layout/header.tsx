@@ -1,31 +1,20 @@
 "use client";
 
-import { useSession } from "next-auth/react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import {
-  PanelLeft,
-  Menu,
-  Search,
-  Sun,
-  Moon,
-  Settings,
-} from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Sidebar } from "./sidebar";
+import { Input } from "@/components/ui/input";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
+import { Menu, Moon, PanelLeft, Search, Settings, Sun } from "lucide-react";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Sidebar } from "./sidebar";
 import { useSidebar } from "./sidebar-provider";
 
 const topNavItems = [
@@ -56,8 +45,7 @@ export function Header() {
           variant="ghost"
           size="icon"
           className="hidden md:flex h-9 w-9 rounded-lg border border-border/50 bg-background hover:bg-accent hover:border-border transition-all duration-200 shadow-sm hover:shadow-md"
-          onClick={() => setIsOpen(!isOpen)}
-        >
+          onClick={() => setIsOpen(!isOpen)}>
           <PanelLeft className="h-4 w-4" />
           <span className="sr-only">Toggle Sidebar</span>
         </Button>
@@ -68,7 +56,10 @@ export function Header() {
         {/* Mobile sidebar sheet */}
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="md:hidden h-9 w-9 rounded-lg border border-border/50 bg-background hover:bg-accent hover:border-border transition-all duration-200 shadow-sm hover:shadow-md">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden h-9 w-9 rounded-lg border border-border/50 bg-background hover:bg-accent hover:border-border transition-all duration-200 shadow-sm hover:shadow-md">
               <Menu className="h-4 w-4" />
               <span className="sr-only">Toggle Menu</span>
             </Button>
@@ -94,8 +85,7 @@ export function Header() {
                 isActive
                   ? "text-foreground"
                   : "text-muted-foreground hover:text-foreground"
-              )}
-            >
+              )}>
               {item.label}
             </Link>
           );
@@ -151,12 +141,10 @@ export function Header() {
         <Button
           variant="ghost"
           size="icon"
-          className="rounded-full h-8 w-8 bg-primary/10"
-        >
+          className="rounded-full h-8 w-8 bg-primary/10">
           <span className="text-xs font-semibold">{initials}</span>
         </Button>
       </div>
     </header>
   );
 }
-

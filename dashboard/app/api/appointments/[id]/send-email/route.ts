@@ -1,10 +1,11 @@
 import { auth } from "@/lib/auth"
-import Appointment from "@/lib/db/models/Appointment"
+import Appointment, { IAppointment } from "@/lib/db/models/Appointment"
 import connectDB from "@/lib/db/mongoose"
 import { resend, isResendConfigured } from "@/lib/email/resend"
 import { CustomerMessageEmail } from "@/lib/email/templates/customer-message"
 import { NextRequest, NextResponse } from "next/server"
 import { render } from "@react-email/render"
+import mongoose from "mongoose"
 
 export async function POST(
   req: NextRequest,
@@ -36,7 +37,7 @@ export async function POST(
 
     await connectDB()
 
-    const appointment = await Appointment.findById(id).lean()
+    const appointment = await Appointment.findById(id).lean() as (IAppointment & { _id: mongoose.Types.ObjectId }) | null
 
     if (!appointment) {
       return NextResponse.json({ error: "Appointment not found" }, { status: 404 })
@@ -66,7 +67,7 @@ export async function POST(
 
     return NextResponse.json({
       success: true,
-      messageId: result.id,
+      messageId: result.data?.id || null,
     })
   } catch (error) {
     console.error("Error sending email:", error)

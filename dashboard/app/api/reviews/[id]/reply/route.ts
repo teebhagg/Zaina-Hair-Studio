@@ -1,8 +1,9 @@
 import { auth } from "@/lib/auth"
-import Review from "@/lib/db/models/Review"
+import Review, { IReview } from "@/lib/db/models/Review"
 import connectDB from "@/lib/db/mongoose"
 import { reviewReplySchema } from "@/lib/validators/review"
 import { NextRequest, NextResponse } from "next/server"
+import mongoose from "mongoose"
 
 export async function POST(
   req: NextRequest,
@@ -40,10 +41,15 @@ export async function POST(
     await review.save()
 
     // Return updated review
-    const updatedReview = await Review.findById(id).lean()
+    const updatedReview = await Review.findById(id).lean() as (IReview & { _id: mongoose.Types.ObjectId }) | null
+    
+    if (!updatedReview) {
+      return NextResponse.json({ error: "Review not found" }, { status: 404 })
+    }
+    
     const reviewData = {
       ...updatedReview,
-      _id: updatedReview!._id.toString(),
+      _id: updatedReview._id.toString(),
       createdAt: updatedReview!.createdAt instanceof Date 
         ? updatedReview!.createdAt.toISOString() 
         : updatedReview!.createdAt,

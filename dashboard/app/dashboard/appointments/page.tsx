@@ -37,7 +37,7 @@ async function getAppointments(page: number = 1, includePast: boolean = false, p
   // If includePast is true and pastOnly is false, no date filter (show all)
 
   // Always sort by newest (most recent first)
-  const sortObject = { date: -1, time: -1, createdAt: -1 };
+  const sortObject: Record<string, 1 | -1> = { date: -1, time: -1, createdAt: -1 };
 
   // Fetch all appointments matching date filter for accurate counting and pagination
   let allAppointments = await AppointmentModel.find(dateFilter)

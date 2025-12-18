@@ -1,7 +1,8 @@
 import { auth } from "@/lib/auth"
-import Review from "@/lib/db/models/Review"
+import Review, { IReview } from "@/lib/db/models/Review"
 import connectDB from "@/lib/db/mongoose"
 import { NextRequest, NextResponse } from "next/server"
+import mongoose from "mongoose"
 
 export async function GET(
   req: NextRequest,
@@ -16,7 +17,7 @@ export async function GET(
     const { id } = await params
     await connectDB()
 
-    const review = await Review.findById(id).lean()
+    const review = await Review.findById(id).lean() as (IReview & { _id: mongoose.Types.ObjectId }) | null
 
     if (!review) {
       return NextResponse.json({ error: "Review not found" }, { status: 404 })
@@ -107,7 +108,7 @@ export async function PATCH(
       id,
       updateData,
       { new: true }
-    ).lean()
+    ).lean() as (IReview & { _id: mongoose.Types.ObjectId }) | null
 
     if (!review) {
       return NextResponse.json({ error: "Review not found" }, { status: 404 })

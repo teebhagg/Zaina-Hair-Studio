@@ -3,9 +3,9 @@ import Appointment from "@/lib/db/models/Appointment";
 import AvailabilitySettings from "@/lib/db/models/AvailabilitySettings";
 import connectDB from "@/lib/db/mongoose";
 import { calendar, oauth2Client } from "@/lib/google";
-import { NextRequest, NextResponse } from "next/server";
 import { client, isSanityConfigured } from "@/lib/sanity/client";
 import { serviceBySlugQuery } from "@/lib/sanity/queries";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(
   req: NextRequest,
@@ -46,7 +46,7 @@ export async function POST(
     if (isSanityConfigured() && appointment.service) {
       try {
         const service = await client
-          .fetch(serviceBySlugQuery("en"), {
+          .fetch(serviceBySlugQuery(), {
             slug: appointment.service,
           })
           .catch(() => null);
@@ -168,4 +168,3 @@ export async function POST(
     );
   }
 }
-

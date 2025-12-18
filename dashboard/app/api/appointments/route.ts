@@ -27,7 +27,7 @@ export async function GET(req: NextRequest) {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const now = new Date();
-    
+
     let dateFilter: any = {};
     if (pastOnly) {
       // Only show past appointments (before now)
@@ -39,7 +39,11 @@ export async function GET(req: NextRequest) {
     // If includePast is true and pastOnly is false, no date filter (show all)
 
     // Always sort by newest (most recent first) - date descending, time descending
-    const sortObject = { date: -1, time: -1, createdAt: -1 };
+    const sortObject: Record<string, 1 | -1> = {
+      date: -1,
+      time: -1,
+      createdAt: -1,
+    };
 
     // Fetch all appointments matching date filter for accurate counting and pagination
     let allAppointments = await Appointment.find(dateFilter)
@@ -72,18 +76,18 @@ export async function GET(req: NextRequest) {
     const mappedAppointments = allAppointments.map((appt: any) => {
       let dateStatus: "past" | "active" | "future" = "future";
       let readableDate = "";
-      
+
       if (appt.date) {
         const appointmentDate = new Date(appt.date);
         const [hours, minutes] = (appt.time || "00:00").split(":").map(Number);
         appointmentDate.setHours(hours, minutes, 0, 0);
-        
+
         // Determine date status
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         const appointmentDateOnly = new Date(appointmentDate);
         appointmentDateOnly.setHours(0, 0, 0, 0);
-        
+
         if (appointmentDate < now) {
           dateStatus = "past";
         } else if (appointmentDateOnly.getTime() === today.getTime()) {
@@ -91,7 +95,7 @@ export async function GET(req: NextRequest) {
         } else {
           dateStatus = "future";
         }
-        
+
         // Format date as readable string
         readableDate = appointmentDate.toLocaleDateString("en-US", {
           weekday: "short",
@@ -117,19 +121,28 @@ export async function GET(req: NextRequest) {
 
     // Filter by dateStatus if provided
     let filteredAppointments = mappedAppointments;
-    if (dateStatus && (dateStatus === "past" || dateStatus === "active" || dateStatus === "future")) {
-      filteredAppointments = mappedAppointments.filter((appt: any) => appt.dateStatus === dateStatus);
+    if (
+      dateStatus &&
+      (dateStatus === "past" ||
+        dateStatus === "active" ||
+        dateStatus === "future")
+    ) {
+      filteredAppointments = mappedAppointments.filter(
+        (appt: any) => appt.dateStatus === dateStatus
+      );
     }
 
     // Get total count after status filtering
     const total = filteredAppointments.length;
 
     // Apply pagination
-    const data = filteredAppointments.slice(skip, skip + limit).map((appt: any) => {
-      // Remove _raw before returning
-      const { _raw, ...rest } = appt;
-      return rest;
-    });
+    const data = filteredAppointments
+      .slice(skip, skip + limit)
+      .map((appt: any) => {
+        // Remove _raw before returning
+        const { _raw, ...rest } = appt;
+        return rest;
+      });
 
     return NextResponse.json({
       data,
@@ -177,14 +190,17 @@ export async function POST(req: NextRequest) {
           $lte: endOfDayDate,
         },
         time: validated.time,
-        status: { $ne: 'cancelled' },
+        status: { $ne: "cancelled" },
       });
 
       // Count appointments at this time slot
       const appointmentCount = existingAppointments.length;
       if (appointmentCount >= 4) {
         return NextResponse.json(
-          { error: "This time slot is full. Maximum 4 appointments allowed per time slot." },
+          {
+            error:
+              "This time slot is full. Maximum 4 appointments allowed per time slot.",
+          },
           { status: 400 }
         );
       }
@@ -199,7 +215,10 @@ export async function POST(req: NextRequest) {
       // If we already have 2 service types and the requested type is not one of them, reject
       if (serviceTypes.size >= 2 && !serviceTypes.has(validated.serviceType)) {
         return NextResponse.json(
-          { error: "Maximum 2 service types allowed per time slot. This service type cannot be added to this time slot." },
+          {
+            error:
+              "Maximum 2 service types allowed per time slot. This service type cannot be added to this time slot.",
+          },
           { status: 400 }
         );
       }

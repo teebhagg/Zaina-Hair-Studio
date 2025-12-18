@@ -1,21 +1,22 @@
-import { notFound } from "next/navigation";
-import { format } from "date-fns";
-import Link from "next/link";
-import { ArrowLeft, Calendar, Clock, DollarSign, Mail, Phone, Scissors, User, FileText, CheckCircle2, XCircle, Loader2, AlertCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { AppointmentActions } from "@/components/appointments/appointment-actions";
+import { PageBreadcrumbs } from "@/components/page-breadcrumbs";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import Appointment from "@/lib/db/models/Appointment";
+import Appointment, { IAppointment } from "@/lib/db/models/Appointment";
 import connectDB from "@/lib/db/mongoose";
-import { PageBreadcrumbs } from "@/components/page-breadcrumbs";
-import { AppointmentActions } from "@/components/appointments/appointment-actions";
+import { format } from "date-fns";
+import { AlertCircle, ArrowLeft, Calendar, CheckCircle2, Clock, DollarSign, FileText, Mail, Phone, Scissors, User, XCircle } from "lucide-react";
+import mongoose from "mongoose";
+import Link from "next/link";
+import { notFound } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
 async function getAppointment(id: string) {
   await connectDB();
-  const appointment = await Appointment.findById(id).lean();
+  const appointment = await Appointment.findById(id).lean() as (IAppointment & { _id: mongoose.Types.ObjectId }) | null;
 
   if (!appointment) {
     return null;

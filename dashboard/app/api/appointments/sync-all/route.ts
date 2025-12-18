@@ -3,9 +3,9 @@ import Appointment from "@/lib/db/models/Appointment";
 import AvailabilitySettings from "@/lib/db/models/AvailabilitySettings";
 import connectDB from "@/lib/db/mongoose";
 import { calendar, oauth2Client } from "@/lib/google";
-import { NextRequest, NextResponse } from "next/server";
 import { client, isSanityConfigured } from "@/lib/sanity/client";
 import { serviceBySlugQuery } from "@/lib/sanity/queries";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
 
     // Fetch all events with pagination
     do {
-      const response = await calendar.events.list({
+      const response: any = await calendar.events.list({
         calendarId: "primary",
         timeMin: oneYearAgo.toISOString(),
         timeMax: twoYearsFromNow.toISOString(),
@@ -95,7 +95,8 @@ export async function POST(req: NextRequest) {
     for (const appointment of appointments) {
       try {
         // Fetch service details to get duration and name
-        let serviceName = (appointment as any).serviceName || appointment.service;
+        let serviceName =
+          (appointment as any).serviceName || appointment.service;
         let durationMinutes = 60; // Default duration
 
         if (isSanityConfigured() && appointment.service) {
@@ -135,7 +136,10 @@ export async function POST(req: NextRequest) {
 
         // Build extras summary for event description if present
         let extrasSummary = "";
-        if (Array.isArray(appointment.extras) && appointment.extras.length > 0) {
+        if (
+          Array.isArray(appointment.extras) &&
+          appointment.extras.length > 0
+        ) {
           extrasSummary = `\nExtras: ${appointment.extras.join(", ")}`;
         }
 
@@ -208,7 +212,7 @@ export async function POST(req: NextRequest) {
               const eventStart = googleEvent.start?.dateTime
                 ? new Date(googleEvent.start.dateTime)
                 : null;
-              
+
               if (eventStart) {
                 const timeDiff = Math.abs(
                   startDateTime.getTime() - eventStart.getTime()
@@ -330,4 +334,3 @@ export async function POST(req: NextRequest) {
     );
   }
 }
-
