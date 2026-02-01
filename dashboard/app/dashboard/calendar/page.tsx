@@ -37,11 +37,11 @@ export default async function CalendarPage() {
     <div className="flex flex-1 flex-col gap-4">
       <PageBreadcrumbs />
       <div className="flex items-center justify-between">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-4xl font-bold tracking-tight">Calendar</h1>
-          <p className="text-muted-foreground text-lg">
-            Manage your appointments and schedule
-          </p>
+      <div className="flex flex-col gap-2">
+        <h1 className="text-4xl font-bold tracking-tight">Calendar</h1>
+        <p className="text-muted-foreground text-lg">
+          Manage your appointments and schedule
+        </p>
         </div>
         <SyncAllButton />
       </div>

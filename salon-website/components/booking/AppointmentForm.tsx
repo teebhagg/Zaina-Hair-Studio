@@ -83,7 +83,7 @@ export function AppointmentForm({ services, promotions = [], initialService, ini
   const [loadingSlots, setLoadingSlots] = useState(false);
 
   const { toast } = useToast();
-
+  
   // Determine initial value - prefer promotion if provided, otherwise use service
   const initialValue = initialPromotion || initialService || "";
 
@@ -254,18 +254,18 @@ export function AppointmentForm({ services, promotions = [], initialService, ini
         totalPrice = 0; // Promotions typically have no price or special pricing
       } else {
         // Calculate total price including extras for regular services
-        const serviceData = services.find(
-          (s) => s.slug.current === pendingData.service
-        );
-        const basePrice = serviceData?.price ?? 0;
-        const extrasPrice = Array.isArray(pendingData.extras)
-          ? pendingData.extras.reduce((total: number, extraName: string) => {
-              const extra = serviceData?.extras?.find(
-                (e) => e.name === extraName
-              );
-              return total + (extra?.price ?? 0);
-            }, 0)
-          : 0;
+      const serviceData = services.find(
+        (s) => s.slug.current === pendingData.service
+      );
+      const basePrice = serviceData?.price ?? 0;
+      const extrasPrice = Array.isArray(pendingData.extras)
+        ? pendingData.extras.reduce((total: number, extraName: string) => {
+            const extra = serviceData?.extras?.find(
+              (e) => e.name === extraName
+            );
+            return total + (extra?.price ?? 0);
+          }, 0)
+        : 0;
         totalPrice = basePrice + extrasPrice;
         serviceName = serviceData?.name || ""; // Pass service name if available
       }
@@ -380,14 +380,14 @@ export function AppointmentForm({ services, promotions = [], initialService, ini
                 {services.length > 0 ? (
                   <>
                     {services.map((service) => (
-                      <SelectItem
-                        key={service._id}
-                        value={service.slug.current}
-                        className="focus:bg-zinc-800 focus:text-white">
-                        {service.name}
-                        {service.price ? ` - $${service.price}` : ""}
-                        {service.duration ? ` (${service.duration} min)` : ""}
-                      </SelectItem>
+                    <SelectItem
+                      key={service._id}
+                      value={service.slug.current}
+                      className="focus:bg-zinc-800 focus:text-white">
+                      {service.name}
+                      {service.price ? ` - $${service.price}` : ""}
+                      {service.duration ? ` (${service.duration} min)` : ""}
+                    </SelectItem>
                     ))}
                     {promotions.length > 0 && (
                       <>
@@ -439,11 +439,11 @@ export function AppointmentForm({ services, promotions = [], initialService, ini
                   </>
                 ) : (
                   <>
-                    Cost: ${basePrice}
-                    {extrasPrice > 0
-                      ? ` + $${extrasPrice.toFixed(2)} (extras)`
-                      : ""}{" "}
-                    • Total: ${totalPrice.toFixed(2)} • Time: {totalDuration} min
+                Cost: ${basePrice}
+                {extrasPrice > 0
+                  ? ` + $${extrasPrice.toFixed(2)} (extras)`
+                  : ""}{" "}
+                • Total: ${totalPrice.toFixed(2)} • Time: {totalDuration} min
                   </>
                 )}
               </p>

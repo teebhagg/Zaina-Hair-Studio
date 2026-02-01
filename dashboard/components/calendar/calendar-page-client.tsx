@@ -91,8 +91,8 @@ export function CalendarPageClient({ appointments }: CalendarPageClientProps) {
       })
 
       return {
-        id: event.id,
-        title: event.title,
+      id: event.id,
+      title: event.title,
         start: eventStart,
         end: eventEnd,
         appointmentId: matchingAppointment?.id || null,

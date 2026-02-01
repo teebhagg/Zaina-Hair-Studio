@@ -221,8 +221,8 @@ export function CalendarView({
                   className="border-b border-border/50 p-3 text-xs text-muted-foreground font-semibold flex items-start"
                   style={{ minHeight: `${maxHeight}px` }}
                 >
-                  {String(hour).padStart(2, '0')}:00
-                </div>
+                {String(hour).padStart(2, '0')}:00
+              </div>
               )
             })}
           </div>
@@ -306,8 +306,8 @@ export function CalendarView({
                   className="border-b border-border/50 p-3 text-xs text-muted-foreground font-semibold flex items-start"
                   style={{ minHeight: `${slotHeight}px` }}
                 >
-                  {String(hour).padStart(2, '0')}:00
-                </div>
+                {String(hour).padStart(2, '0')}:00
+              </div>
               )
             })}
           </div>

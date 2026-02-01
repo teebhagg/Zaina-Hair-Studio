@@ -27,8 +27,8 @@ async function getRecentAppointments() {
       } else if (apt.createdAt) {
         sortDate = new Date(apt.createdAt).getTime()
       }
-      
-      return {
+
+    return {
         id: apt._id.toString(),
         name: apt.name || apt.email || 'Unknown',
         service: apt.serviceName || apt.service || 'N/A',

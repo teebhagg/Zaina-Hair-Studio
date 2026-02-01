@@ -106,15 +106,15 @@ async function getAppointments(page: number = 1, includePast: boolean = false, p
     }
 
     return {
-      id: appt._id.toString(),
-      customer: appt.name || appt.email,
-      service: appt.serviceName || appt.service,
-      date: appt.date ? new Date(appt.date).toISOString().split("T")[0] : "",
+    id: appt._id.toString(),
+    customer: appt.name || appt.email,
+    service: appt.serviceName || appt.service,
+    date: appt.date ? new Date(appt.date).toISOString().split("T")[0] : "",
       readableDate,
-      time: appt.time,
-      status: appt.status || "pending",
+    time: appt.time,
+    status: appt.status || "pending",
       dateStatus,
-      price: appt.price || 0,
+    price: appt.price || 0,
     };
   });
 

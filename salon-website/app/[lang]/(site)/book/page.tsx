@@ -95,7 +95,7 @@ export default async function BookPage({
           <p className="text-xl text-muted-foreground">{dict.book.subtitle}</p>
         </div>
         <AppointmentForm 
-          services={translatedServices}
+          services={translatedServices} 
           promotions={translatedPromotions}
           initialService={service}
           initialPromotion={promotion}

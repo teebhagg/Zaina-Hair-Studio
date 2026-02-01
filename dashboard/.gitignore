@@ -68,3 +68,5 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
+# Email previews
+email-previews/

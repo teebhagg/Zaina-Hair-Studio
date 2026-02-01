@@ -156,7 +156,7 @@ export async function createAppointment(data: unknown) {
 
         if (service) {
           if (service.serviceType) {
-            serviceType = service.serviceType;
+          serviceType = service.serviceType;
           }
           if (service.name) {
             serviceName = service.name;
